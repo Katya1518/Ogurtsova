@@ -1,0 +1,10 @@
+from matplotlib.pyplot import *
+from math import *
+import numpy as np
+
+def A(x):
+	return x**2-6-x
+
+x=np.arange(-10,10.01,0.01)
+plot(x, A(x), x, [0 for i in x])
+show()
