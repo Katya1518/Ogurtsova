@@ -1,0 +1,10 @@
+from matplotlib.pyplot import *
+from math import *
+import numpy as np
+
+fnc=input()
+f=lambda x:eval(fnc)
+x=np.arange(-100,100.1,0.1)
+plot(x, [f(i) for i in x])
+xkcd()
+show()
