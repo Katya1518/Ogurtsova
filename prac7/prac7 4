@@ -1,0 +1,22 @@
+from math import *
+import pylab
+from matplotlib import mlab
+
+xmin = -10.0
+xmax = 10.0
+
+dx = 0.1
+xlist = mlab.frange (xmin, xmax, dx)
+
+pylab.ion()
+
+a=0.01
+while True:
+    a+=0.01
+    rg1 = [sin(a+x) for x in xlist]
+    rg2 = [cos(2*x) for x in xlist]
+    pylab.clf()
+    pylab.plot (rg1, rg2)
+    pylab.draw()
+
+pylab.close() 
