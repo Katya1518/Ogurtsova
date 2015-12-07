@@ -1,0 +1,16 @@
+import math
+class Point:
+    x = 0
+    y = 0
+    def __init__(self, str):
+                self.x, self.y = str.split()
+                self.x, self.y= int(self.x), int(self.y)
+    def __add__(self):
+            return Point(self.x + self.y)
+
+    def __str__(self):
+                return self.name + ' ' + str(self.score)
+
+
+Point(input())
+print(Point)
