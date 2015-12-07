@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import mlab
+import math
+import pylab
+
+Tmin = -20
+Tmax = 20
+dt = 0.01
+T = mlab.frange (Tmin,  Tmax,  dt)
+pylab.ion()
+
+for a in range (40):
+       
+        tlist = [math.sin(t + a) for t in T]
+        ylist = [math.cos(2*t) for t in T]
+        #pylab.clf()
+        pylab.plot (tlist, ylist)
+        pylab.draw()
+      
+
+pylab.close()
+
+plt.grid(True)
+plt.show()
