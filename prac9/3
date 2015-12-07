@@ -1,0 +1,18 @@
+summa = int(input())
+procent = float(input())
+vremya = float(input())
+procent = procent/100
+mes = int(vremya*12)
+
+plateh = summa *(procent/12 + (procent/12)/((1 + (procent/12))**mes - 1))
+print (plateh)
+
+vyplata = plateh * 12 * vremya
+print(vyplata - summa)
+
+
+for i in range (mes):
+    procent1 = summa * procent / 12
+    OsnDolg = plateh - procent1
+    summa = summa - OsnDolg
+    print (summa, '   ', vyplata, '   ',procent1, '   ', OsnDolg )
