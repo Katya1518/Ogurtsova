@@ -1,0 +1,323 @@
+from matrix import Matrix
+from unittest import TestCase, main
+
+
+class SimpleTests(TestCase):
+    def testMatrixConstructWithoutInitialization(self):
+        """Ñîçäàíèå ìàòðèöû áåç èíèöèàëèçàöèè"""
+
+        # òåñòèðóì âîçìîæíîñòü ñîçäàíèÿ ìàòðèö ðàçíûõ ðàçìåðîâ
+        # äëÿ êàæäîé ìàòðèöû ïðîâåðÿåì, ÷òî ïî-óìîë÷àíèþ îíà çàïîëíåíà íóëÿìè
+        dims = [(2, 2), (3, 4), (4, 3)]
+
+        for (m, n) in dims:
+            a = Matrix(m, n)
+
+            self.assertEqual(a.get_m(), m)
+            self.assertEqual(a.get_n(), n)
+            self.assertEqual(a.get_size(), (m, n))
+
+            for i in range(m):
+                for j in range(n):
+                    self.assertEqual(a.get(i, j), 0)
+
+    def testMatrixConstructWithInvalidArguments(self):
+        """Ñîçäàíèå ìàòðèöû ñ íåïðàâèëüíûìè àðãóìåíòàìè"""
+
+        # ïåðåäà¸ì íåâåðíûå àðãóìåíòû è ïðîâåðÿåì, ÷òî ãåíåðèðóåòñÿ èñêëþ÷åíèå
+        with self.assertRaises(ValueError):
+            Matrix(0, 1)
+
+        with self.assertRaises(ValueError):
+            Matrix(1, 0)
+
+        with self.assertRaises(ValueError):
+            Matrix(-1, 1)
+
+        with self.assertRaises(ValueError):
+            Matrix(1, -1)
+
+        with self.assertRaises(ValueError):
+            Matrix(1.0, 1)
+
+        with self.assertRaises(ValueError):
+            Matrix(1, 1.0)
+
+    def testMatrixSet(self):
+        """Èçìåíåíèå çíà÷åíèé ìàòðèöû"""
+
+        # òåñòèðóåì ìåõàíèçì èçìåíåíèÿ çíà÷åíèé ýëåìåíòîâ ìàòðèöû
+        m = Matrix(1, 2)
+
+        m.set(0, 0, 1)
+        m.set(0, 1, 2)
+
+        self.assertEqual(m.get(0, 0), 1)
+        self.assertEqual(m.get(0, 1), 2)
+
+    def testMatrixCompare(self):
+        """Ñðàâíåíèå ìàòðèö"""
+
+        # ñîçäà¸ì äâå îäèíàêîâûå ìàòðèöû è ñðàâíèâàåì èõ ìåæäó ñîáîé
+        m1 = Matrix(1, 2)
+        m2 = Matrix(1, 2)
+
+        self.assertEqual(m1, m2)
+
+        # ìåíÿåì çíà÷åíèå îäíîãî ýëåìåíòà âòîðîé ìàòðèöû è ñíîâà ñðàâíèâàåì
+        # ìàòðèöû ìåæäó ñîáîé
+        m2.set(0, 0, 1)
+
+        self.assertNotEqual(m1, m2)
+
+    def testMatrixAdd(self):
+        """Ñëîæåíèå ìàòðèö"""
+
+        # ñêëàäûâàåì äâå ìàòðèöû è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix(3, 2)
+
+        a.set(0, 0, -1)
+        a.set(0, 1, -2)
+        a.set(1, 0, -3)
+        a.set(1, 1, -4)
+        a.set(2, 0, -5)
+        a.set(2, 1, -6)
+
+        b = Matrix(3, 2)
+
+        b.set(0, 0, 1)
+        b.set(0, 1, 2)
+        b.set(1, 0, 3)
+        b.set(1, 1, 4)
+        b.set(2, 0, 5)
+        b.set(2, 1, 6)
+
+        _c = Matrix(3, 2)
+
+        c = a + b
+
+        self.assertEqual(c, _c)
+
+    def testMatrixSub(self):
+        """Âû÷èòàíèå ìàòðèö"""
+
+        # âû÷èòàåì äâå ìàòðèöû è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix(3, 2)
+
+        a.set(0, 0, 1)
+        a.set(0, 1, 2)
+        a.set(1, 0, 3)
+        a.set(1, 1, 4)
+        a.set(2, 0, 5)
+        a.set(2, 1, 6)
+
+        b = Matrix(3, 2)
+
+        b.set(0, 0, 1)
+        b.set(0, 1, 2)
+        b.set(1, 0, 3)
+        b.set(1, 1, 4)
+        b.set(2, 0, 5)
+        b.set(2, 1, 6)
+
+        _c = Matrix(3, 2)
+
+        c = a - b
+
+        self.assertTrue(c, _c)
+
+    def testMatrixScalarMul(self):
+        """Óìíîæåíèå ìàòðèöû íà ÷èñëî"""
+
+        # óìíîæàåì ìàòðèöó íà ÷èñëî è ïðîâåðÿåì ðåçóëüòàò
+        _a = Matrix(3, 2)
+        _a.set(0, 0, 1)
+        _a.set(0, 1, 2)
+        _a.set(1, 0, 3)
+        _a.set(1, 1, 4)
+        _a.set(2, 0, 5)
+        _a.set(2, 1, 6)
+
+        a = _a * 2
+
+        b = a * 2
+
+        self.assertEqual(b, a + a)
+
+        b = a * 1.5
+
+        self.assertEqual(b, _a + _a + _a)
+
+    def testMatrixScalarDiv(self):
+        """Äåëåíèå ìàòðèöû íà ÷èñëî"""
+
+        # äåëèì ìàòðèöó íà ÷èñëî è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix(3, 2)
+        a.set(0, 0, 1)
+        a.set(0, 1, 2)
+        a.set(1, 0, 3)
+        a.set(1, 1, 4)
+        a.set(2, 0, 5)
+        a.set(2, 1, 6)
+
+        b = a * 2
+
+        self.assertEqual(b / 2, a)
+
+        b = a * 3
+
+        self.assertEqual(b / 1.5, a + a)
+
+    def testTranspose(self):
+        """Òðàñïîíèðîâàíèå ìàòðèöû"""
+
+        # âûïîëíÿåì òðàíñïîíèðîâàíèå ìàòðèöû è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix(3, 2)
+        a.set(0, 0, 1)
+        a.set(0, 1, 2)
+        a.set(1, 0, 3)
+        a.set(1, 1, 4)
+        a.set(2, 0, 5)
+        a.set(2, 1, 6)
+
+        b = Matrix(2, 3)
+        b.set(0, 0, 1)
+        b.set(1, 0, 2)
+        b.set(0, 1, 3)
+        b.set(1, 1, 4)
+        b.set(0, 2, 5)
+        b.set(1, 2, 6)
+
+        self.assertEqual(a.transpose(), b)
+
+    def testMatrixMul(self):
+        """Ìàòðè÷íîå óìíîæåíèå"""
+
+        # âûïîëíÿåì ìàòðè÷íîå óìíîæåíèå è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix(2, 3)
+        a.set(0, 0, 1)
+        a.set(0, 1, 2)
+        a.set(0, 2, 3)
+        a.set(1, 0, 4)
+        a.set(1, 1, 5)
+        a.set(1, 2, 6)
+
+        b = Matrix(3, 2)
+        b.set(0, 0, 9)
+        b.set(0, 1, 8)
+        b.set(1, 0, 7)
+        b.set(1, 1, 6)
+        b.set(2, 0, 5)
+        b.set(2, 1, 4)
+
+        c = Matrix(2, 2)
+        c.set(0, 0, 38)
+        c.set(0, 1, 32)
+        c.set(1, 0, 101)
+        c.set(1, 1, 86)
+
+        self.assertEqual(a * b, c)
+
+    def testMatrixMulWithWrongSizes(self):
+        """Ìàòðè÷íîå óìíîæåíèå ìàòðèö ñ íåïðàâèëüíûìè ðàçìåðàìè"""
+
+        # âûïîëíÿåì íåêîððåêòíîå ìàòðè÷íîå óìíîæåíèåì è ïðîâåðÿåì,
+        # ÷òî ãåíåðèðóåòñÿ èñêëþ÷åíèå
+
+        with self.assertRaises(RuntimeError):
+            Matrix(1, 2) * Matrix(1, 2)
+
+        with self.assertRaises(RuntimeError):
+            Matrix(2, 2) * Matrix(1, 2)
+
+
+class NotSoSimpleTests(TestCase):
+    def testMatrixConstructionWithInvalidArguments(self):
+        """Ñîçäàíèå ìàòðèöû ñ íåïðàâèëüíûìè àðãóìåíòàìè"""
+
+        # ïåðåäà¸ì íåâåðíûå àðãóìåíòû è ïðîâåðÿåì, ÷òî ãåíåðèðóåòñÿ èñêëþ÷åíèå
+        with self.assertRaises(ValueError):
+            Matrix([], 123)
+
+        with self.assertRaises(ValueError):
+            Matrix(123, [])
+
+    def testMatrixConstructionWithInitialization(self):
+        """Ñîçäàíèå è èíèöèàëèçàöèÿ ìàòðèöû"""
+
+        # ñîçäà¸ì ìàòðèöó è ïðîâåðÿåì, ÷òî çíà÷åíèÿ å¸ ýëåìåíòîâ ñîîòâåòñòâóþò òåì,
+        # ïðè ïîìîùè êîòîðûõ áûëà âûïîëíåíà èíèöèàëèçàöèÿ
+        m = Matrix([
+            [1, 2, 3],
+            [4, 5, 6]
+        ])
+
+        self.assertEqual(m.get(0, 0), 1)
+        self.assertEqual(m.get(0, 1), 2)
+        self.assertEqual(m.get(0, 2), 3)
+        self.assertEqual(m.get(1, 0), 4)
+        self.assertEqual(m.get(1, 1), 5)
+        self.assertEqual(m.get(1, 2), 6)
+
+    def testMatrixCompareWithWrongSizes(self):
+        """Ñðàâíåíèå ìàòðèö ðàçíîãî ðàçìåðà"""
+
+        # ïûòàåìñÿ ñðàâíèòü ìàòðèöû ðàçíîãî ðàçìåðà è ïðîâåðÿì,
+        # ÷òî ãåíåðèðóåòñÿ èñêëþ÷åíèå
+        with self.assertRaises(RuntimeError):
+            Matrix(1, 1) == Matrix(2, 2)
+
+    def testDeterminant(self):
+        """Âû÷èñëåíèå îïðåäåëèòåëÿ"""
+
+        # ïðîâåðÿåì, ÷òî ïîïûòêà âû÷èñëèòü îïðåäåëèòåëü äëÿ ïðÿìîóãîëüíîé ìàòðèöû
+        # ïðèâîäèò ê ãåíåðàöèè èñêëþ÷åíèÿ
+        with self.assertRaises(RuntimeError):
+            Matrix(1, 2).determinant()
+
+        with self.assertRaises(RuntimeError):
+            Matrix(2, 1).determinant()
+
+        # âû÷èñëÿåì îïðåäåëèòåëü è ïðîâåðÿåì ðåçóëüòàò
+        m = Matrix([
+            [1, 0],
+            [0, 1]
+        ])
+
+        self.assertEqual(m.determinant(), 1)
+
+        m = Matrix([
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 2, 3]
+        ])
+
+        self.assertEqual(m.determinant(), 0)
+
+        m = Matrix([
+            [0, 0, 1],
+            [1, 2, 3],
+            [7, 2, 1]
+        ])
+
+        self.assertEqual(m.determinant(), -12)
+
+    def testInvert(self):
+        """Îáðàùåíèå ìàòðèöû"""
+
+        # îáðàùàåì ìàòðèöó è ïðîâåðÿåì ðåçóëüòàò
+        a = Matrix([
+            [1, 1],
+            [2, 1]
+        ])
+
+        b = Matrix([
+            [-1, 1],
+            [2, -1]
+        ])
+
+        self.assertEqual(a.invert(), b)
+
+
+if __name__ == "__main__":
+    main()
