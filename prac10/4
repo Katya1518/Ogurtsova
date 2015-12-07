@@ -1,0 +1,10 @@
+Dict = open('en-ru.txt', 'r')
+input = open('input.txt', 'r')
+perevod = input.read()
+
+slovar = dict()
+Lines = Dict.readlines()
+Lines = [line.split() for line in Lines]
+print(Lines)
+
+for word in Lines:
