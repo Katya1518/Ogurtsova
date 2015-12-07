@@ -1,0 +1,48 @@
+input = open('input.txt', 'r')
+s = input.read()
+s = s.split()
+s_new = ' '
+s_new1 =  ' '
+x = 0
+
+
+for elem in (s):
+    for i in range (len(elem)):
+        if elem[i] == ',':
+            s_new += " "
+        elif elem[i] == '.':
+            s_new += " "
+        elif elem[i] == '!':
+            s_new += " "
+        elif elem[i] == '?':
+            s_new += " "
+        else:
+            s_new +=elem[i]
+    s_new += " "
+    print(s_new)
+s_new = s_new[1:-1]
+print (s_new)
+
+
+for elem in (s_new):
+    for i in range (len(elem)):
+        s_new1 += elem[i].lower()
+    #s_new1 += " "
+s_new1 = s_new1[1:]
+print(s_new1)
+
+
+stats = dict()
+for word in (s_new1):
+    if word in stats:
+        stats[word] += 1
+    else:
+        stats[word] = 1
+print(stats)
+
+for word in stats:
+    if word != " ":
+        if stats[word] >= x:
+            x = stats[word]
+print(x)
+input.close()
