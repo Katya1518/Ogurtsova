@@ -1,0 +1,7 @@
+import math
+def formula(x):
+    y = math.log(1/(math.exp(math.sin(x)+1)) / (5/4 + 1/ x**15) ,  1 + x**2)
+    print(y)
+formula(1)
+formula(10)
+formula(1000)
